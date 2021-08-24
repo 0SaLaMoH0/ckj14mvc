@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Users page</title>
+</head>
+<body>
+	<div class="container">
+		<div class="page">
+			<h3>Users list:</h3>
+			<form action="/users/creteForm">
+				<div th:each="user : ${users}">
+					<div class="text" th:text="${user.username}"></div>
+				</div>
+				<div>
+					<input class="btn" type="submit" value="Создать">
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+<style>
+	body{
+		background-image: url("https://sun9-39.userapi.com/impg/4oOIeH97_h1sq7Xz508ULWEJNKTxX4wW-DQwTg/vL5nJOViooo.jpg?size=1920x1017&quality=96&sign=67bb2a4ecf472b295cb029858a950dd9&type=album");
+	}
+	.text{
+		font-size: 25px;
+	}
+	.container{
+		max-width: 1400px;
+		margin: 0 auto;
+	}
+	.page{
+		margin: 0 auto;
+		margin-top: 20vh;
+		text-align: center;
+	}
+	.btn{
+		width: 350px;
+		height: 50px;
+		font-size: 25px;
+	}
+</style>
+</html>

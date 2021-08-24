@@ -1,0 +1,214 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 268435456 bytes for G1 virtual space
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   The process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+#   JVM is running with Zero Based Compressed Oops mode in which the Java heap is
+#     placed in the first 32GB address space. The Java Heap base address is the
+#     maximum limit for the native heap growth. Please use -XX:HeapBaseMinAddress
+#     to set the Java Heap base and to place the Java Heap above 32GB virtual address.
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (os_windows.cpp:3466), pid=6468, tid=9696
+#
+# JRE version:  (16.0.2+7) (build )
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (16.0.2+7-67, mixed mode, sharing, tiered, compressed oops, compressed class ptrs, g1 gc, windows-amd64)
+# No core dump will be written. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -XX:TieredStopAtLevel=1 -Xverify:none -Dspring.output.ansi.enabled=always -javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2021.2\lib\idea_rt.jar=55754:C:\Program Files\JetBrains\IntelliJ IDEA 2021.2\bin -Dcom.sun.management.jmxremote -Dspring.jmx.enabled=true -Dspring.liveBeansView.mbeanDomain -Dspring.application.admin.enabled=true -Dfile.encoding=UTF-8 com.example.demo.Ckj14mvcApplication
+
+Host: AMD FX(tm)-6350 Six-Core Processor             , 6 cores, 15G,  Windows 10 , 64 bit Build 19041 (10.0.19041.662)
+Time: Mon Aug 23 16:37:19 2021 RTZ 2 (s 10 , 64 bit Build 19041 (10.0.19041.662) elapsed time: 0.018254 seconds (0d 0h 0m 0s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x000001a883306eb0):  JavaThread "Unknown thread" [_thread_in_vm, id=9696, stack(0x000000a4fd200000,0x000000a4fd300000)]
+
+Stack: [0x000000a4fd200000,0x000000a4fd300000]
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x6681ca]
+V  [jvm.dll+0x7c9e69]
+V  [jvm.dll+0x7cb61e]
+V  [jvm.dll+0x7cbc73]
+V  [jvm.dll+0x242c55]
+V  [jvm.dll+0x664f89]
+V  [jvm.dll+0x659b75]
+V  [jvm.dll+0x2fbfbb]
+V  [jvm.dll+0x3031b6]
+V  [jvm.dll+0x35299e]
+V  [jvm.dll+0x352bcf]
+V  [jvm.dll+0x2d3028]
+V  [jvm.dll+0x2d4264]
+V  [jvm.dll+0x79c741]
+V  [jvm.dll+0x360791]
+V  [jvm.dll+0x77a3f0]
+V  [jvm.dll+0x3e4e8f]
+V  [jvm.dll+0x3e6961]
+C  [jli.dll+0x52fb]
+C  [ucrtbase.dll+0x214c2]
+C  [KERNEL32.DLL+0x17034]
+C  [ntdll.dll+0x4d0d1]
+
+
+---------------  P R O C E S S  ---------------
+
+Threads class SMR info:
+_java_thread_list=0x00007ff9440ecbb8, length=0, elements={
+}
+
+Java Threads: ( => current thread )
+
+Other Threads:
+  0x000001a8833574f0 GCTaskThread "GC Thread#0" [stack: 0x000000a4fd300000,0x000000a4fd400000] [id=1248]
+  0x000001a883368480 ConcurrentGCThread "G1 Main Marker" [stack: 0x000000a4fd400000,0x000000a4fd500000] [id=5156]
+  0x000001a883368ef0 ConcurrentGCThread "G1 Conc#0" [stack: 0x000000a4fd500000,0x000000a4fd600000] [id=1280]
+
+[error occurred during error reporting (printing all threads), id 0xc0000005, EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ff9438c3ee7]
+
+VM state: not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x000001a883302870] Heap_lock - owner thread: 0x000001a883306eb0
+
+Heap address: 0x0000000700a00000, size: 4086 MB, Compressed Oops mode: Zero based, Oop shift amount: 3
+
+CDS archive(s) mapped at: [0x0000000000000000-0x0000000000000000-0x0000000000000000), size 0, SharedBaseAddress: 0x0000000800000000, ArchiveRelocationMode: 0.
+Narrow klass base: 0x0000000000000000, Narrow klass shift: 0, Narrow klass range: 0x0
+
+GC Precious Log:
+<Empty>
+
+Heap:
+ garbage-first heap   total 0K, used 0K [0x0000000700a00000, 0x0000000800000000)
+  region size 2048K, 0 young (0K), 0 survivors (0K)
+
+[error occurred during error reporting (printing heap information), id 0xc0000005, EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ff943ca1eed]
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (0 events):
+No events
+
+Classes unloaded (0 events):
+No events
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+Events (1 events):
+Event: 0.009 Loaded shared library C:\Program Files\Java\jdk-16.0.2\bin\java.dll
+
+
+Dynamic libraries:
+0x00007ff7b6ef0000 - 0x00007ff7b6f00000 	C:\Program Files\Java\jdk-16.0.2\bin\java.exe
+0x00007ff99be50000 - 0x00007ff99c046000 	C:\Windows\SYSTEM32\ntdll.dll
+0x00007ff99b9e0000 - 0x00007ff99ba9d000 	C:\Windows\System32\KERNEL32.DLL
+0x00007ff999bb0000 - 0x00007ff999e79000 	C:\Windows\System32\KERNELBASE.dll
+0x00007ff999590000 - 0x00007ff999690000 	C:\Windows\System32\ucrtbase.dll
+0x00007ff991990000 - 0x00007ff9919a8000 	C:\Program Files\Java\jdk-16.0.2\bin\jli.dll
+0x00007ff99a5e0000 - 0x00007ff99a68c000 	C:\Windows\System32\ADVAPI32.dll
+0x00007ff990a70000 - 0x00007ff990a89000 	C:\Program Files\Java\jdk-16.0.2\bin\VCRUNTIME140.dll
+0x00007ff99b940000 - 0x00007ff99b9de000 	C:\Windows\System32\msvcrt.dll
+0x00007ff99bc40000 - 0x00007ff99bcdc000 	C:\Windows\System32\sechost.dll
+0x00007ff99bce0000 - 0x00007ff99be0b000 	C:\Windows\System32\RPCRT4.dll
+0x00007ff99baa0000 - 0x00007ff99bc40000 	C:\Windows\System32\USER32.dll
+0x00007ff999e80000 - 0x00007ff999ea2000 	C:\Windows\System32\win32u.dll
+0x00007ff980e10000 - 0x00007ff9810ab000 	C:\Windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.19041.746_none_ca02b4b61b8320a4\COMCTL32.dll
+0x00007ff99aab0000 - 0x00007ff99aada000 	C:\Windows\System32\GDI32.dll
+0x00007ff999730000 - 0x00007ff99983b000 	C:\Windows\System32\gdi32full.dll
+0x00007ff999690000 - 0x00007ff99972d000 	C:\Windows\System32\msvcp_win.dll
+0x00007ff995820000 - 0x00007ff99582a000 	C:\Windows\SYSTEM32\VERSION.dll
+0x00007ff99af30000 - 0x00007ff99af60000 	C:\Windows\System32\IMM32.DLL
+0x00007ff9920d0000 - 0x00007ff9920dc000 	C:\Program Files\Java\jdk-16.0.2\bin\vcruntime140_1.dll
+0x00007ff94d4f0000 - 0x00007ff94d581000 	C:\Program Files\Java\jdk-16.0.2\bin\msvcp140.dll
+0x00007ff9435e0000 - 0x00007ff94418b000 	C:\Program Files\Java\jdk-16.0.2\bin\server\jvm.dll
+0x00007ff99ab60000 - 0x00007ff99ab68000 	C:\Windows\System32\PSAPI.DLL
+0x00007ff9940b0000 - 0x00007ff9940b9000 	C:\Windows\SYSTEM32\WSOCK32.dll
+0x00007ff99a570000 - 0x00007ff99a5db000 	C:\Windows\System32\WS2_32.dll
+0x00007ff983140000 - 0x00007ff983167000 	C:\Windows\SYSTEM32\WINMM.dll
+0x00007ff997560000 - 0x00007ff997572000 	C:\Windows\SYSTEM32\kernel.appcore.dll
+0x00007ff991d00000 - 0x00007ff991d0a000 	C:\Program Files\Java\jdk-16.0.2\bin\jimage.dll
+0x00007ff996db0000 - 0x00007ff996f94000 	C:\Windows\SYSTEM32\DBGHELP.DLL
+0x00007ff97c1b0000 - 0x00007ff97c1dc000 	C:\Windows\SYSTEM32\dbgcore.DLL
+0x00007ff999840000 - 0x00007ff9998c0000 	C:\Windows\System32\bcryptPrimitives.dll
+0x00007ff9909c0000 - 0x00007ff9909ce000 	C:\Program Files\Java\jdk-16.0.2\bin\instrument.dll
+0x00007ff990a10000 - 0x00007ff990a35000 	C:\Program Files\Java\jdk-16.0.2\bin\java.dll
+
+dbghelp: loaded successfully - version: 4.0.5 - missing functions: none
+symbol engine: initialized successfully - sym options: 0x614 - pdb path: .;C:\Program Files\Java\jdk-16.0.2\bin;C:\Windows\SYSTEM32;C:\Windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.19041.746_none_ca02b4b61b8320a4;C:\Program Files\Java\jdk-16.0.2\bin\server
+
+VM Arguments:
+jvm_args: -XX:TieredStopAtLevel=1 -Xverify:none -Dspring.output.ansi.enabled=always -javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2021.2\lib\idea_rt.jar=55754:C:\Program Files\JetBrains\IntelliJ IDEA 2021.2\bin -Dcom.sun.management.jmxremote -Dspring.jmx.enabled=true -Dspring.liveBeansView.mbeanDomain -Dspring.application.admin.enabled=true -Dfile.encoding=UTF-8 
+java_command: com.example.demo.Ckj14mvcApplication
+java_class_path (initial): E:\java projects\ckj14mvc\target\classes;C:\Users\SaLaMoH\.m2\repository\org\springframework\boot\spring-boot-starter-security\2.5.4\spring-boot-starter-security-2.5.4.jar;C:\Users\SaLaMoH\.m2\repository\org\springframework\boot\spring-boot-starter\2.5.4\spring-boot-starter-2.5.4.jar;C:\Users\SaLaMoH\.m2\repository\org\springframework\boot\spring-boot-starter-logging\2.5.4\spring-boot-starter-logging-2.5.4.jar;C:\Users\SaLaMoH\.m2\repository\ch\qos\logback\logback-classic\1.2.5\logback-classic-1.2.5.jar;C:\Users\SaLaMoH\.m2\repository\ch\qos\logback\logback-core\1.2.5\logback-core-1.2.5.jar;C:\Users\SaLaMoH\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.14.1\log4j-to-slf4j-2.14.1.jar;C:\Users\SaLaMoH\.m2\repository\org\apache\logging\log4j\log4j-api\2.14.1\log4j-api-2.14.1.jar;C:\Users\SaLaMoH\.m2\repository\org\slf4j\jul-to-slf4j\1.7.32\jul-to-slf4j-1.7.32.jar;C:\Users\SaLaMoH\.m2\repository\jakarta\annotation\jakarta.annotation-api\1.3.5\jakarta.annotation-api-1.3.5.jar;C:\Users\SaLaMoH\.m2\repository\org\yaml\snakeyaml\1.28\snakeyaml-1.28.jar;C:\Users\SaLaMoH\.m2\repository\org\springframework\spring-aop\5.3.9\spring-aop-5.3.9.jar;C:\Users\SaLaMoH\.m2\repository\org\springframework\spring-beans\5.3.9\spring-beans-5.3.9.jar;C:\Users\SaLaMoH\.m2\repository\org\springframework\security\spring-security-config\5.5.2\spring-security-config-5.5.2.jar;C:\Users\SaLaMoH\.m2\repository\org\springframework\security\spring-security-core\5.5.2\spring-security-core-5.5.2.jar;C:\Users\SaLaMoH\.m2\repository\org\springframework\security\spring-security-crypto\5.5.2\spring-security-crypto-5.5.2.jar;C:\Users\SaLaMoH\.m2\repository\org\springframework\spring-context\5.3.9\spring-context-5.3.9.jar;C:\Users\SaLaMoH\.m2\repository\org\springframework\security\spring-security-web\5.5.2\spring-security-web-5.5.2.jar;C:\Users\SaLaMoH\.m2\repository\org\springframework\spring-expression\5.3.9\spring-expression-5.3.9.jar;C:\Users\SaLaMoH\.m2\repository
+Launcher Type: SUN_STANDARD
+
+[Global flags]
+     intx CICompilerCount                          = 3                                         {product} {ergonomic}
+     uint ConcGCThreads                            = 2                                         {product} {ergonomic}
+     uint G1ConcRefinementThreads                  = 6                                         {product} {ergonomic}
+   size_t G1HeapRegionSize                         = 2097152                                   {product} {ergonomic}
+    uintx GCDrainStackTargetSize                   = 64                                        {product} {ergonomic}
+   size_t InitialHeapSize                          = 268435456                                 {product} {ergonomic}
+     bool ManagementServer                         = true                                      {product} {command line}
+   size_t MarkStackSize                            = 4194304                                   {product} {ergonomic}
+   size_t MaxHeapSize                              = 4284481536                                {product} {ergonomic}
+   size_t MinHeapDeltaBytes                        = 2097152                                   {product} {ergonomic}
+   size_t MinHeapSize                              = 8388608                                   {product} {ergonomic}
+    uintx NonNMethodCodeHeapSize                   = 6973028                                {pd product} {ergonomic}
+    uintx NonProfiledCodeHeapSize                  = 244685212                              {pd product} {ergonomic}
+    uintx ProfiledCodeHeapSize                     = 0                                      {pd product} {ergonomic}
+    uintx ReservedCodeCacheSize                    = 251658240                              {pd product} {ergonomic}
+     bool SegmentedCodeCache                       = true                                      {product} {ergonomic}
+   size_t SoftMaxHeapSize                          = 4284481536                             {manageable} {ergonomic}
+     intx TieredStopAtLevel                        = 1                                         {product} {command line}
+     bool UseCompressedClassPointers               = true                           {product lp64_product} {ergonomic}
+     bool UseCompressedOops                        = true                           {product lp64_product} {ergonomic}
+     bool UseG1GC                                  = true                                      {product} {ergonomic}
+     bool UseLargePagesIndividualAllocation        = false                                  {pd product} {ergonomic}
+
+Logging:
+Log output configuration:
+ #0: stdout all=warning uptime,level,tags
+ #1: stderr all=off uptime,level,tags
+
+Environment Variables:
+PATH=C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Users\SaLaMoH\AppData\Local\Microsoft\WindowsApps;
+USERNAME=SaLaMoH
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=AMD64 Family 21 Model 2 Stepping 0, AuthenticAMD
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS:
+ Windows 10 , 64 bit Build 19041 (10.0.19041.662)
+OS uptime: 0 days 2:12 hours
+
+CPU: total 6 (initial active 6) (6 cores per cpu, 1 threads per core) family 21 model 2 stepping 0 microcode 0x0, cx8, cmov, fxsr, mmx, 3dnowpref, sse, sse2, sse3, ssse3, sse4a, sse4.1, sse4.2, popcnt, lzcnt, tsc, tscinvbit, avx, aes, clmul, bmi1, fma, vzeroupper, clflush
+
+Memory: 4k page, system-wide physical 16342M (3415M free)
+TotalPageFile size 16342M (AvailPageFile size 108M)
+current process WorkingSet (physical memory assigned to process): 10M, peak: 10M
+current process commit charge ("private bytes"): 53M, peak: 309M
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (16.0.2+7-67) for windows-amd64 JRE (16.0.2+7-67), built on Jun  8 2021 23:24:19 by "mach5one" with MS VC++ 16.7 (VS2019)
+
+END.

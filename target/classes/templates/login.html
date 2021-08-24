@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login page</title>
+</head>
+<body>
+    <div class="container">
+        <div class="page">
+            <h2 class="form">Введите ваш логин и пароль</h2>
+            <form class="form" action="/login" method="post">
+                <input class="field" type="text" name="username" placeholder="Логин">
+                <input class="field" type="password" name="password" placeholder="Пароль">
+                Запомнить меня <input class="check" type="checkbox">
+                <input class="btn" type="submit" value="Войти">
+            </form>
+        </div>
+    </div>
+    <style>
+        body{
+            background-image: url("https://sun9-39.userapi.com/impg/4oOIeH97_h1sq7Xz508ULWEJNKTxX4wW-DQwTg/vL5nJOViooo.jpg?size=1920x1017&quality=96&sign=67bb2a4ecf472b295cb029858a950dd9&type=album");
+        }
+        .container{
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .page{
+            background-color: rgba(137, 150, 162, 0.56);
+            margin: 0 auto;
+            width: 30%;
+            height: 35vh;
+            margin-top: 20vh;
+            text-align: center;
+        }
+        .form{
+            width: 350px;
+            height: 50px;
+            font-size: 25px;
+            margin: 0 auto;
+        }
+        .field{
+            width: 350px;
+            height: 50px;
+            font-size: 25px;
+        }
+        .check{
+            display: inline;
+            width: 20px;
+            height: 20px;
+            margin: 20px 0;
+        }
+        .btn{
+            width: 350px;
+            height: 50px;
+            font-size: 25px;
+        }
+        h2{
+            color: black;
+            width: 350px;
+        }
+        input{
+            display: block;
+        }
+    </style>
+</body>
+</html>
