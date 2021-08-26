@@ -8,15 +8,12 @@
     <div class="container">
         <div class="page">
             <h2>Домашняя страница</h2>
-            <form action="/login">
-                <input class="btn" type="submit" value="Войти">
-            </form>
-            <form action="/notes">
-                <input class="btn"  type="submit" value="Заметки">
-            </form>
-            <form action="/users">
-                <input class="btn"  type="submit" value="Пользователи">
-            </form>
+            <form>
+                <input class="btn" formaction="/login" type="submit" value="Войти">
+                <input class="btn" formaction="/registration" type="submit" value="Регистрация">
+                <input class="btn" formaction="/notes" type="submit" value="Заметки">
+                <input class="btn" formaction="/users" type="submit" value="Пользователи">
+            </form> 
         </div>
     </div>
 </body>
@@ -32,7 +29,7 @@
         background-color: rgba(137, 150, 162, 0.4);
         margin: 0 auto;
         width: 30%;
-        height: 25vh;
+        height: 35vh;
         margin-top: 20vh;
         text-align: center;
     }
@@ -41,5 +38,14 @@
         height: 50px;
         font-size: 25px;
     }
+    form{
+        width: 350px;
+        height: 50px;
+        font-size: 25px;
+        margin: 0 auto;
+    }
+    input {
+    	display: block;
+	}
 </style>
 </html>
