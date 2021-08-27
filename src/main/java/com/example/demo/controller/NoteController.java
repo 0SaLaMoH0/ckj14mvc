@@ -1,8 +1,11 @@
 package com.example.demo.controller;
 
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.Optional;
 
+import com.example.demo.model.User;
+import com.example.demo.repositry.UserRepositiry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,15 +18,18 @@ import com.example.demo.repositry.NoteRepository;
 @RequestMapping("/notes")
 public class NoteController {
 	private NoteRepository noteRepository;
+	private UserRepositiry userRepositiry;
 
 	@Autowired
-	public NoteController(NoteRepository noteRepository) {
+	public NoteController(NoteRepository noteRepository, UserRepositiry userRepositiry) {
 		this.noteRepository = noteRepository;
+		this.userRepositiry = userRepositiry;
 	}
 	
 	@GetMapping()
-	public String findAll(Model model) {
-		Iterable<Note> notes = noteRepository.findAll();
+	public String findAll(Model model, Principal prl) {
+		User user = userRepositiry.findByUsername(prl.getName());
+		Iterable<Note> notes = user.getNotes();
 		model.addAttribute("notes",notes);
 		return "notes";
 	}
@@ -31,7 +37,10 @@ public class NoteController {
 	public String getNotes(){return "notesForm";}
 
 	@PostMapping("/create")
-	public String addNote(@ModelAttribute Note note){
+	public String addNote(@ModelAttribute Note note, Principal prl){
+		User user = userRepositiry.findByUsername(prl.getName());
+		user.addNote(note);
+		userRepositiry.save(user);
 		noteRepository.save(note);
 		return "redirect:/notes";
 	}

@@ -2,11 +2,7 @@ package com.example.demo.model;
 
 import java.util.Objects;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "notes")
@@ -16,14 +12,18 @@ public class Note {
 	private int id;
 	private String title;
 	private String description;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	private User user;
 	
 	public Note () {}
 	
-	public Note(int id, String title, String description) {
+	public Note(int id, String title, String description, User user) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.description = description;
+		this.user = user;
 	}
 
 	public int getId() {
@@ -50,6 +50,10 @@ public class Note {
 		this.description = description;
 	}
 
+	public User getUser() {return user;}
+
+	public void setUser(User user) {this.user = user;}
+
 	@Override
 	public String toString() {
 		return "Note [id=" + id + ", title=" + title + ", description=" + description + "]";
@@ -70,7 +74,5 @@ public class Note {
 			return false;
 		Note other = (Note) obj;
 		return Objects.equals(description, other.description) && id == other.id && Objects.equals(title, other.title);
-	}	
-	
-	
+	}
 }
