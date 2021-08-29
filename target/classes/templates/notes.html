@@ -9,7 +9,7 @@
 		<div class="page">
 			<h2>Страница заметок</h2>
 			<div class="note" th:each = "note : ${notes}">
-				<div class="text" th:text = ${note.id}></div>
+				<div class="text" th:text = ${note.date}></div>
 				<div class="text" th:text = ${note.title}></div>
 				<div class="text" th:text = ${note.description}></div>
 				<form method="post">
