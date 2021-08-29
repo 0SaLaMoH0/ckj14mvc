@@ -1,11 +1,14 @@
 package com.example.demo.model;
 
+import java.util.Date;
 import java.util.Objects;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "notes")
+@Table(name = "notes", indexes = {
+		@Index(name = "idx_note_date", columnList = "date")
+})
 public class Note {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,15 +18,17 @@ public class Note {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	private User user;
+	private String date;
 	
 	public Note () {}
 	
-	public Note(int id, String title, String description, User user) {
+	public Note(int id, String title, String description, User user, String date) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.user = user;
+		this.date = date;
 	}
 
 	public int getId() {
@@ -53,6 +58,10 @@ public class Note {
 	public User getUser() {return user;}
 
 	public void setUser(User user) {this.user = user;}
+
+	public String getDate() {return date;}
+
+	public void setDate(String date) {this.date = date;}
 
 	@Override
 	public String toString() {

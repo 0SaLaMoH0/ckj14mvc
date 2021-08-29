@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.security.Principal;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +41,7 @@ public class NoteController {
 	@PostMapping("/create")
 	public String addNote(@ModelAttribute Note note, Principal prl){
 		User user = userRepositiry.findByUsername(prl.getName());
+		note.setDate(new Date().toString());
 		user.addNote(note);
 		userRepositiry.save(user);
 		noteRepository.save(note);
@@ -61,6 +63,7 @@ public class NoteController {
 		Optional<Note> opt = noteRepository.findById(n.getId());
 		if (!opt.isEmpty()){
 			Note note = opt.get();
+			note.setDate(new Date().toString());
 			note.setTitle(n.getTitle());
 			note.setDescription(n.getDescription());
 			noteRepository.save(note);
