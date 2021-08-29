@@ -92,7 +92,7 @@ public class NoteController {
 	public String search(@RequestParam("param") String param, Model model) {
 		//List<Note> list = noteRepository.findByTitle(param);
 		//Iterable<Note> notes = noteRepository.findByTitleContainingOrDescriptionContaining(param, param);
-		List<Note> notes = noteRepository.findNotes(param);
+		List<Note> notes = noteRepository.findNotes("%"+param+"%");
 		model.addAttribute("notes", notes);
 		return "notes";
 	}

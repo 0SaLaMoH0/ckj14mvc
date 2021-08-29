@@ -14,6 +14,6 @@ import com.example.demo.model.Note;
 public interface NoteRepository extends CrudRepository<Note, Integer> {
 	List<Note> findByTitle(String title);
 	List<Note> findByTitleContainingOrDescriptionContaining(String str, String str2);
-	@Query("select n from Note n where n.title like '%:str%' or n.description like '%:str%'")
+	@Query("select n from Note n where n.title like :str or n.description like :str")
 	List<Note> findNotes (@Param("str") String str);
 }
