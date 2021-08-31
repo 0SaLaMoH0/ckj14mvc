@@ -9,8 +9,9 @@
         <div class="page">
             <h2 class="form">Введите ваш логин и пароль</h2>
             <form class="form" action="/regComplete" method="post">
-                <input class="field" type="text" name="username" placeholder="Логин">
-                <input class="field" type="password" name="password" placeholder="Пароль">
+                <input class="field" type="text" name="username" placeholder="Логин" pattern="[a-zA-Z0-9_]+" required = "required">
+                <input class="field" type="password" name="password" placeholder="Пароль" pattern="[a-zA-Z0-9_]{8,}" required = "required">
+                <input class="field" type="email" name="email" placeholder="email" pattern="^[a-zA-Z0-9_]+@[a-zA-Z0-9]+.[a-zA-z]+$" required = "required">
                 <input class="btn" type="submit" value="Регистрация">
             </form>
         </div>

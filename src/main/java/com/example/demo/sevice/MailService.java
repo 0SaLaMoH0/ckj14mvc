@@ -17,5 +17,6 @@ public class MailService {
     public void sendMail(SimpleMailMessage mail){
         System.out.println(Thread.currentThread().getName());
         javaMailSender.send(mail);
+        System.out.println("письмо отправлено");
     }
 }

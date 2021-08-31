@@ -18,6 +18,7 @@ public class User {
 	private List<Note> notes = new ArrayList<>();
 	@Column(unique = true)
 	private String email;
+	private boolean enabled;
 	
 	public User() {}
 	
@@ -58,6 +59,9 @@ public class User {
 	public void setNotes(List<Note> notes) {this.notes = notes;}
 	public String getEmail() {return email;}
 	public void setEmail(String email) {this.email = email;}
+	public Boolean isEnabled() {return enabled;}
+	public void setEnabled(Boolean enabled) {this.enabled = enabled;}
+
 	public void addNote(Note note){
 		note.setUser(this);
 		notes.add(note);
