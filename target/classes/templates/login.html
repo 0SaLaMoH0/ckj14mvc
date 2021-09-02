@@ -8,11 +8,12 @@
     <div class="container">
         <div class="page">
             <h2 class="form">Введите ваш логин и пароль</h2>
-            <form class="form" action="/login" method="post">
+            <form class="form" method="post">
                 <input class="field" type="text" name="username" placeholder="Логин">
                 <input class="field" type="password" name="password" placeholder="Пароль">
                 Запомнить меня <input class="check" type="checkbox">
-                <input class="btn" type="submit" value="Войти">
+                <input class="btn" formaction="/login" type="submit" value="Войти">
+                <input class="btn" formaction="/remember" type="submit" value="Забыли пароль">
             </form>
         </div>
     </div>

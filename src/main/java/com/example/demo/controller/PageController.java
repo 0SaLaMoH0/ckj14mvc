@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.ConfirmationToken;
+import com.example.demo.model.User;
 import com.example.demo.repositry.TokenRepository;
+import com.example.demo.repositry.UserRepositiry;
 import com.example.demo.sevice.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -11,10 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.demo.model.User;
-import com.example.demo.repositry.UserRepositiry;
-
-import java.io.StringReader;
 import java.util.UUID;
 
 @Controller
