@@ -27,7 +27,7 @@ public class MyUserDetailsServise implements UserDetailsService{
 		UserDetails userDetails = org.springframework.security.core.userdetails.User.builder()
 				.username(user.getUsername())
 				.password(user.getPassword())
-				.roles(user.getRole())
+				.roles(user.getRole().getName())
 				.disabled(!user.isEnabled())
 				.build();
 		return userDetails;

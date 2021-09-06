@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.ConfirmationToken;
 import com.example.demo.model.User;
+import com.example.demo.repositry.RoleRepository;
 import com.example.demo.repositry.TokenRepository;
 import com.example.demo.repositry.UserRepositiry;
 import com.example.demo.sevice.MailService;
@@ -20,12 +21,14 @@ public class PageController {
 	private UserRepositiry userRepositiry;
 	private MailService mailService;
 	private TokenRepository tokenRepository;
+	private RoleRepository roleRepository;
 
 	@Autowired
-	public PageController(UserRepositiry userRepositiry, MailService mailService, TokenRepository tokenRepository) {
+	public PageController(UserRepositiry userRepositiry, MailService mailService, TokenRepository tokenRepository, RoleRepository roleRepository) {
 		this.userRepositiry = userRepositiry;
 		this.mailService = mailService;
 		this.tokenRepository = tokenRepository;
+		this.roleRepository = roleRepository;
 	}
 	
     @GetMapping
@@ -69,7 +72,7 @@ public class PageController {
     public String registration(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("email") String email) {
     	User user = userRepositiry.findByUsername(username);
     	if (user == null) {
-    		User regUser = new User(0,username,new BCryptPasswordEncoder().encode(password),"USER",null,email);
+    		User regUser = new User(0,username,new BCryptPasswordEncoder().encode(password),roleRepository.findByName("USER"),null,email);
     		userRepositiry.save(regUser);
 			ConfirmationToken token = new ConfirmationToken(regUser);
 			String url = "http://localhost:8080/confirm?tokenValue="+token.getValue();

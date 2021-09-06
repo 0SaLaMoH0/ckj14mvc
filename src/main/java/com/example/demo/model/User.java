@@ -13,7 +13,8 @@ public class User {
 	@Column(unique = true)
 	private String username;
 	private String password;
-	private String role;
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Role role;
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private List<Note> notes = new ArrayList<>();
 	@Column(unique = true)
@@ -22,7 +23,7 @@ public class User {
 	
 	public User() {}
 	
-	public User(int id, String username, String password, String role, List<Note> notes, String email) {
+	public User(int id, String username, String password, Role role, List<Note> notes, String email) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -49,10 +50,10 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getRole() {
+	public Role getRole() {
 		return role;
 	}
-	public void setRole(String role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
 	public List<Note> getNotes() {return notes;}

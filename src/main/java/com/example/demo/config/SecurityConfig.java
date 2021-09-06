@@ -23,7 +23,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
     public SecurityConfig(MyUserDetailsServise userDetailsServise) {
-		super();
 		this.userDetailsServise = userDetailsServise;
 	}
 	@Override
@@ -46,22 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     	provider.setUserDetailsService(userDetailsServise);
     	auth.authenticationProvider(provider);
     }
-    /*
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        UserDetails user1 = User.builder()
-                .username("user")
-                .password(passwordEncoder().encode("user"))
-                .roles("USER").build();
-        UserDetails user2 = User.builder()
-                .username("admin")
-                .password(passwordEncoder().encode("admin"))
-                .roles("ADMIN").build();
-        auth.inMemoryAuthentication()
-                .passwordEncoder(passwordEncoder())
-                .withUser(user1).withUser(user2);
-    }
-    */
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
