@@ -5,8 +5,6 @@ async function submitForm(){
         if(confirm("Продолжить регистрацию?")){
             form.submit();
         }
-    }else{
-        alert("fail");
     }
 }
 

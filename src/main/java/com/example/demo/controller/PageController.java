@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.config.SecurityConfig;
 import com.example.demo.model.ConfirmationToken;
 import com.example.demo.model.User;
 import com.example.demo.repositry.RoleRepository;
@@ -8,6 +9,8 @@ import com.example.demo.repositry.UserRepositiry;
 import com.example.demo.sevice.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +25,7 @@ public class PageController {
 	private MailService mailService;
 	private TokenRepository tokenRepository;
 	private RoleRepository roleRepository;
+	private BCryptPasswordEncoder encoder;
 
 	@Autowired
 	public PageController(UserRepositiry userRepositiry, MailService mailService, TokenRepository tokenRepository, RoleRepository roleRepository) {
@@ -29,6 +33,7 @@ public class PageController {
 		this.mailService = mailService;
 		this.tokenRepository = tokenRepository;
 		this.roleRepository = roleRepository;
+		this.encoder = new BCryptPasswordEncoder();
 	}
 	
     @GetMapping
@@ -53,12 +58,16 @@ public class PageController {
 		tokenRepository.delete(token);
 		return "redirect:/login";
 	}
+	@GetMapping("/changePassword")
+	public String passwordForm(){
+		return "passwordChangeForm";
+	}
 	@PostMapping("/remember")
 	public String remember(@RequestParam("username") String username){
 		User user = userRepositiry.findByUsername(username);
 		SimpleMailMessage mail = new SimpleMailMessage();
 		String newPassword = UUID.randomUUID().toString();
-		user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
+		user.setPassword(encoder.encode(newPassword));
 		userRepositiry.save(user);
 		mail.setText("Новый пароль вашего аккаунта: "+newPassword);
 		mail.setTo(user.getEmail());
@@ -67,12 +76,27 @@ public class PageController {
 		mailService.sendMail(mail);
 		return "redirect:/login";
 	}
+	@PostMapping("/passwordComplete")
+	public String changePassword(@RequestParam("password") String password){
+		String username;
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal instanceof UserDetails){
+			username = ((UserDetails)principal).getUsername();
+		}else{
+			username = principal.toString();
+		}
+		User user = userRepositiry.findByUsername(username);
+		if (user == null){return "redirect:/login";}
+		user.setPassword(encoder.encode(password));
+		userRepositiry.save(user);
+		return "redirect:/";
+	}
     
     @PostMapping("/regComplete")
     public String registration(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("email") String email) {
     	User user = userRepositiry.findByUsername(username);
     	if (user == null) {
-    		User regUser = new User(0,username,new BCryptPasswordEncoder().encode(password),roleRepository.findByName("USER"),null,email);
+    		User regUser = new User(0,username,encoder.encode(password),roleRepository.findByName("USER"),null,email);
     		userRepositiry.save(regUser);
 			ConfirmationToken token = new ConfirmationToken(regUser);
 			String url = "http://localhost:8080/confirm?tokenValue="+token.getValue();
