@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Home page</title>
@@ -8,13 +9,23 @@
     <div class="container">
         <div class="page">
             <h2>Домашняя страница</h2>
-            <form>
-                <input class="btn" formaction="/login" type="submit" value="Войти">
-                <input class="btn" formaction="/registration" type="submit" value="Регистрация">
-                <input class="btn" formaction="/notes" type="submit" value="Заметки">
-                <input class="btn" formaction="/users" type="submit" value="Пользователи">
-                <input class="btn" formaction="/changePassword" type="submit" value="Сменить пароль">
-            </form> 
+            <div>
+                <div sec:authorize="isAuthenticated()">
+                    <a href="/notes">Notes</a>
+                </div>
+                <div sec:authorize="hasRole('ADMIN')">
+                    <a href="/users">Users</a>
+                </div>
+                <div sec:authorize="isAnonymous()">
+                    <a href="/login">Login</a>
+                </div>
+                <div sec:authorize="isAnonymous()">
+                    <a href="/registration">Sing Up</a>
+                </div>
+                <div sec:authorize="isAuthenticated()">
+                    <a href="/logout">Logout</a>
+                </div>
+            </div>
         </div>
     </div>
 </body>

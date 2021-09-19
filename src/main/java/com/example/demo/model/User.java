@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,7 @@ public class User {
 	private int id;
 	@Column(unique = true)
 	private String username;
+	@JsonIgnore
 	private String password;
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Role role;

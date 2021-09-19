@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.UUID;
 
 @Controller
@@ -77,14 +78,8 @@ public class PageController {
 		return "redirect:/login";
 	}
 	@PostMapping("/passwordComplete")
-	public String changePassword(@RequestParam("password") String password){
-		String username;
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if (principal instanceof UserDetails){
-			username = ((UserDetails)principal).getUsername();
-		}else{
-			username = principal.toString();
-		}
+	public String changePassword(@RequestParam("password") String password, Principal prl){
+		String username = prl.getName();
 		User user = userRepositiry.findByUsername(username);
 		if (user == null){return "redirect:/login";}
 		user.setPassword(encoder.encode(password));
@@ -93,13 +88,17 @@ public class PageController {
 	}
     
     @PostMapping("/regComplete")
-    public String registration(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("email") String email) {
+    public String registration(@RequestParam("username") String username,
+							   @RequestParam("password") String password,
+							   @RequestParam("email") String email,
+							   @RequestParam("url") String url) {
     	User user = userRepositiry.findByUsername(username);
     	if (user == null) {
     		User regUser = new User(0,username,encoder.encode(password),roleRepository.findByName("USER"),null,email);
     		userRepositiry.save(regUser);
 			ConfirmationToken token = new ConfirmationToken(regUser);
-			String url = "http://localhost:8080/confirm?tokenValue="+token.getValue();
+			url = url.replace("registration","confirm");
+			url = url+"?tokenValue="+token.getValue();
 			SimpleMailMessage mail = new SimpleMailMessage();
 			mail.setText("Перейдите по ссылке для активации аккаунта: "+url);
 			mail.setTo(regUser.getEmail());
@@ -111,4 +110,10 @@ public class PageController {
     	}
 		return "redirect:/registration";
     }
+
+    @GetMapping("/notes")
+	public String notes(){return "notes";}
+
+	@GetMapping("/users")
+	public String users(){return "userPage";}
 }

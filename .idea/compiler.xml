@@ -11,7 +11,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="ckj14mvc" target="11" />
+      <module name="ckj14mvc" target="16" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

@@ -3,6 +3,7 @@ let form = document.getElementById("form");
 async function submitForm(){
     if (await validateForm()){
         if(confirm("Продолжить регистрацию?")){
+            form.url.value = window.location.href
             form.submit();
         }
     }
@@ -14,6 +15,7 @@ async function validateForm(){
     let password2 = form.confirmPassword;
     let email = form.email;
     let response = await fetch("/api/usernames");
+    let isEmailUsed = (await fetch("/api/email?email=" + email)).json();
     let usernames = await response.json();
 
     if (!/^[a-zA-Z0-9_]+$/.test(username.value)){
@@ -42,6 +44,11 @@ async function validateForm(){
     }
     if (!email.value.match("^[a-zA-Z0-9_]+@[a-zA-Z0-9]+.[a-zA-z]+$")){
         alert("Вы ввели некоректную почту");
+        email.focus();
+        return false;
+    }
+    if (isEmailUsed){
+        alert("Эта почта уже используется");
         email.focus();
         return false;
     }

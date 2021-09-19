@@ -1,22 +1,22 @@
 package com.example.demo.controller;
 
-import java.security.Principal;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-
+import com.example.demo.exeptions.NoSuchNoteExeption;
+import com.example.demo.model.Note;
 import com.example.demo.model.User;
+import com.example.demo.repositry.NoteRepository;
 import com.example.demo.repositry.UserRepositiry;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.hateoas.EntityModel;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.model.Note;
-import com.example.demo.repositry.NoteRepository;
+import java.security.Principal;
+import java.util.Date;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
-@Controller
+@RestController
 @RequestMapping("/notes")
 public class NoteController {
     private NoteRepository noteRepository;
@@ -28,75 +28,55 @@ public class NoteController {
         this.userRepositiry = userRepositiry;
     }
 
-    @GetMapping()
-    public String findAll(Model model, Principal prl) {
+    @GetMapping("/all")
+    public List<EntityModel<Note>> getAllNotes(Principal prl){
         User user = userRepositiry.findByUsername(prl.getName());
-        Iterable<Note> notes = user.getNotes();
-        model.addAttribute("notes",notes);
-        return "notes";
+        return user.getNotes().stream().map(getMapper(prl)).collect(Collectors.toList());
     }
-    @GetMapping("/notesForm")
-    public String getNotes(){return "notesForm";}
+
+    @GetMapping("/one/{id}")
+    public EntityModel<Note> getNote(@PathVariable int id, Principal prl){
+        Note note = noteRepository.findByIdAndUserUsername(id,prl.getName()).orElseThrow(()->new NoSuchNoteExeption(id));
+        var result = EntityModel.of(note,
+                linkTo(methodOn(NoteController.class).getAllNotes(prl)).withRel("notes"),
+                linkTo(methodOn(NoteController.class).deleteNote(id,prl)).withRel("notes")
+        );
+        return result;
+    }
 
     @PostMapping("/create")
-    public String addNote(@ModelAttribute Note note, Principal prl){
+    public EntityModel<Note> createNote(@RequestBody Note note, Principal prl){
         User user = userRepositiry.findByUsername(prl.getName());
-        note.setDate(new Date().toString());
         user.addNote(note);
+        note = noteRepository.save(note);
         userRepositiry.save(user);
-        noteRepository.save(note);
-        return "redirect:/notes";
+        return getMapper(prl).apply(note);
     }
 
-    @PostMapping("/updateForm")
-    public String updateForm(@RequestParam("id") int id, Model model){
-        Optional<Note> opt = noteRepository.findById(id);
-        if (!opt.isEmpty()) {
-            Note note = opt.get();
-            model.addAttribute("note", note);
-        }
-        return "noteUpdateForm";
+    @PutMapping("/update")
+    public Note updateNote(@RequestBody Note note, Principal prl){
+        Note oldNote = noteRepository.findByIdAndUserUsername(note.getId(), prl.getName()).orElseThrow(() -> new NoSuchNoteExeption(note.getId()));
+        oldNote.setDate(new Date().toString());
+        oldNote.setTitle(note.getTitle());
+        oldNote.setDescription(note.getDescription());
+        return noteRepository.save(oldNote);
     }
 
-    @PostMapping("/update")
-    public String updateNote(@ModelAttribute Note n){
-        Optional<Note> opt = noteRepository.findById(n.getId());
-        if (!opt.isEmpty()){
-            Note note = opt.get();
-            note.setDate(new Date().toString());
-            note.setTitle(n.getTitle());
-            note.setDescription(n.getDescription());
-            noteRepository.save(note);
-        }
-        return "redirect:/notes";
+    @DeleteMapping("/delete/{id}")
+    public Note deleteNote(@PathVariable int id, Principal prl){
+        Note note = noteRepository.findByIdAndUserUsername(id, prl.getName()).orElseThrow(()->new NoSuchNoteExeption(id));
+        noteRepository.delete(note);
+        return note;
     }
 
-    @PostMapping("/delete")
-    public String deleteNote(@RequestParam("id") int id){
-        Optional<Note> note = noteRepository.findById(id);
-        if (!note.isEmpty()) {
-            noteRepository.delete(note.get());
-        }
-        return "redirect:/notes";
-    }
-
-    @GetMapping("/get")
-    public String getNote(@RequestParam("id") int id, Model model){
-        Optional<Note> opt = noteRepository.findById(id);
-        if (!opt.isEmpty()) {
-            Note[] ANotes = {opt.get()};
-            Iterable<Note> notes = Arrays.asList(ANotes);
-            model.addAttribute("notes", notes);
-        }
-        return "notes";
-    }
-
-    @GetMapping("/search")
-    public String search(@RequestParam("param") String param, Model model) {
-        //List<Note> list = noteRepository.findByTitle(param);
-        //Iterable<Note> notes = noteRepository.findByTitleContainingOrDescriptionContaining(param, param);
-        List<Note> notes = noteRepository.findNotes("%"+param+"%");
-        model.addAttribute("notes", notes);
-        return "notes";
+    public static Function<Note,EntityModel<Note>> getMapper(Principal prl) {
+        Function<Note, EntityModel<Note>> mapper = n -> {
+            return EntityModel.of(n,
+                    linkTo(methodOn(NoteController.class).getNote(n.getId(), prl)).withRel("get"),
+                    linkTo(methodOn(NoteController.class).updateNote(n, prl)).withRel("put"),
+                    linkTo(methodOn(NoteController.class).deleteNote(n.getId(), prl)).withRel("delete")
+            );
+        };
+        return mapper;
     }
 }
