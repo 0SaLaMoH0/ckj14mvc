@@ -46,8 +46,8 @@ async function putNote(){
 }
 async function deleteNote(note){
     let url;
-    if (note.hasOwnProperty("links")){url = note.links[0].href;}
-    if (note.hasOwnProperty("_links")){url = note._links.get.href;}
+    if (note.hasOwnProperty("links")){url = note.links[2].href;}
+    if (note.hasOwnProperty("_links")){url = note._links["delete"].href;}
     await fetch(url,{
         method: "DELETE"
     });

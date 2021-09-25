@@ -3,6 +3,7 @@ let rootElement = document.getElementById("root");
 loadNotesPage();
 
 function addNote(note){
+    let noteElement = document.createElement("div")
     let title = document.createElement("a");
     let description = document.createElement("div");
     let deleteButt = document.createElement("button");
@@ -12,16 +13,17 @@ function addNote(note){
     deleteButt.onclick = async function(){
         if (confirm("Вы уверены, что хотите удалить заметку?")) {
             await deleteNote(note);
-            rootElement.removeChild(note);
+            rootElement.removeChild(noteElement);
         }
-    };
+    }
     title.innerText = note.title;
     if (note.hasOwnProperty("links")){title.href = note.links[0].href;}
     if (note.hasOwnProperty("_links")){title.href = note._links.get.href;}
     description.innerText = note.description;
-    rootElement.appendChild(title);
-    rootElement.appendChild(description);
-    rootElement.appendChild(deleteButt);
+    noteElement.appendChild(title);
+    noteElement.appendChild(description);
+    noteElement.appendChild(deleteButt);
+    rootElement.appendChild(noteElement);
 }
 
 async function loadNotesPage(){
@@ -34,7 +36,7 @@ async function loadNotesPage(){
 async function createNote(){
     let note = {
         title: prompt("Введите заголовок"),
-        description: prompt("Ввудите текст заметки"),
+        description: prompt("Введите текст заметки"),
     }
     note = await postNote(note);
     if (await postNote(note)){

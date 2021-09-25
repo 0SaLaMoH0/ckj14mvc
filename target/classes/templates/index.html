@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Home page</title>
+    <link rel="stylesheet" href="/styles/popup.css">
 </head>
 <body>
     <div class="container">
@@ -24,6 +25,18 @@
                 </div>
                 <div sec:authorize="isAuthenticated()">
                     <a href="/logout">Logout</a>
+                </div>
+            </div>
+            <div>
+                <a href="#popupWindow">Open popup window</a>
+            </div>
+            <div id="popupWindow", class="popup">
+                <a></a>
+                <div class="popupBody">
+                    <div class="popupContent">
+                        <a href="##">Close Window</a>
+                        <h2>Its popup window</h2>
+                    </div>
                 </div>
             </div>
         </div>

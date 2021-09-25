@@ -98,7 +98,7 @@ public class PageController {
     		userRepositiry.save(regUser);
 			ConfirmationToken token = new ConfirmationToken(regUser);
 			url = url.replace("registration","confirm");
-			url = url+"?tokenValue="+token.getValue();
+			url = url+"tokenValue="+token.getValue();
 			SimpleMailMessage mail = new SimpleMailMessage();
 			mail.setText("Перейдите по ссылке для активации аккаунта: "+url);
 			mail.setTo(regUser.getEmail());

@@ -15,7 +15,7 @@ async function validateForm(){
     let password2 = form.confirmPassword;
     let email = form.email;
     let response = await fetch("/api/usernames");
-    let isEmailUsed = (await fetch("/api/email?email=" + email)).json();
+    let isEmailUsed = await (await fetch("/api/email?email=" + email.value)).json();
     let usernames = await response.json();
 
     if (!/^[a-zA-Z0-9_]+$/.test(username.value)){
@@ -47,7 +47,7 @@ async function validateForm(){
         email.focus();
         return false;
     }
-    if (isEmailUsed){
+    if (!isEmailUsed){
         alert("Эта почта уже используется");
         email.focus();
         return false;

@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -8,10 +10,11 @@ import java.util.List;
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
-    String name;
+    private int id;
+    private String name;
     @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
-    List<User> users;
+    @JsonIgnore
+    private List<User> users;
 
     public Role() {}
 
