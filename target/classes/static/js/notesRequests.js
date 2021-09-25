@@ -19,10 +19,9 @@ async function postNote(note){
         body: strNote
     });
     if (response.status == 200) {
-        note = await response.json();
-        return true;
+        return await response.json();
     }
-    return false;
+    return null;
 }
 async function putNote(){
     let id = prompt("Enter id");
@@ -46,8 +45,8 @@ async function putNote(){
 }
 async function deleteNote(note){
     let url;
-    if (note.hasOwnProperty("links")){url = note.links[0].href;}
-    if (note.hasOwnProperty("_links")){url = note._links.get.href;}
+    if (note.hasOwnProperty("links")){url = note.links[2].href;}
+    if (note.hasOwnProperty("_links")){url = note._links["delete"].href;}
     await fetch(url,{
         method: "DELETE"
     });

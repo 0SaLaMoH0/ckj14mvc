@@ -1,47 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Notes page</title>
+	<meta charset="UTF-8">
+	<title>Notes page</title>
+	<link rel="stylesheet" href="/styles/notes.css">
 </head>
 <body>
 	<div class="container">
 		<div class="page">
 			<h2>Заметки</h2>
 			<button class="btn" type="button" onclick="createNote()">Create</button>
-			<div id="root" class="note"></div>
-			<button class="btn" type="button" onclick="getAll()">Get all</button>
+			<div id="root"></div>
 		</div>
 	</div>
 </body>
 <script type="application/javascript" src="/js/notesRequests.js"></script>
 <script type="application/javascript" src="/js/notesPage.js"></script>
-<style>
-	body{
-		background-image: url("https://sun9-39.userapi.com/impg/4oOIeH97_h1sq7Xz508ULWEJNKTxX4wW-DQwTg/vL5nJOViooo.jpg?size=1920x1017&quality=96&sign=67bb2a4ecf472b295cb029858a950dd9&type=album");
-	}
-	.text{
-		font-size: 25px;
-	}
-	.container{
-		max-width: 1400px;
-		margin: 0 auto;
-	}
-	.page{
-		margin: 0 auto;
-		width: 30%;
-		margin-top: 20vh;
-		text-align: center;
-	}
-	.note{
-		background-color: rgba(221, 225, 229, 0.7);
-		height: 15vh;
-		text-align: center;
-	}
-	.btn{
-		width: 350px;
-		height: 50px;
-		font-size: 25px;
-	}
-</style>
 </html>

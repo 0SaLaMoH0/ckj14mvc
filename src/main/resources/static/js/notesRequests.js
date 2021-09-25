@@ -19,10 +19,9 @@ async function postNote(note){
         body: strNote
     });
     if (response.status == 200) {
-        note = await response.json();
-        return true;
+        return await response.json();
     }
-    return false;
+    return null;
 }
 async function putNote(){
     let id = prompt("Enter id");
